@@ -213,7 +213,7 @@ function sendRsvpData(jsonData) {
         redirectTo("RSVP.html");
       } else {
         $(".rsvp-submitted").html("Success! Thank you!");
-        redirectTo("DETAILS.html");
+        redirectTo("details.html");
       }
     })
     .fail(function (jsonData) {
