@@ -198,11 +198,11 @@ p {
   top: 28%;
   width: 100%;
   text-align: center;
-  animation: fadeStoryAnimation ease 6s;
-  -webkit-animation: fadeStoryAnimation ease 6s;
-  -moz-animation: fadeStoryAnimation ease 6s;
-  -o-animation: fadeStoryAnimation ease 6s;
-  -ms-animation: fadeStoryAnimation ease 6s;
+  animation: fadeStoryAnimation ease 7s;
+  -webkit-animation: fadeStoryAnimation ease 7s;
+  -moz-animation: fadeStoryAnimation ease 7s;
+  -o-animation: fadeStoryAnimation ease 7s;
+  -ms-animation: fadeStoryAnimation ease 7s;
   animation-delay: 32s;
   animation-iteration-count: 1;  }
 
