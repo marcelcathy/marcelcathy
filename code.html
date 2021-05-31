@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>- CODE</title>
+  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+      font-family: sans-serif;
+      font-style: italic;
+      overflow: hidden;  }
+
+    /* ----- PART 1 - ASIDE MENU ----- */
+    h1 {
+      margin: 0;
+      color: #ddd;
+      padding: 10px;
+      border-bottom: 1px solid #666;
+      text-align: right;  }
+
+    button {
+      color: white;  }
+
+    button:focus {
+      outline: none;  }
+
+    aside {
+      z-index: 300;
+      background: #090a0f;
+      border: 1px solid white;
+      width: 130px;
+      height: 205px;
+      position: fixed;
+      transition: 0.3s;
+      left: -132px;
+      top: 0;
+      transition-timing-function: cubic-bezier(0.9, 0, 1, 1);  }
+
+    aside.close {
+      left: 0;
+      transition: 0.3s;
+      transition-timing-function: cubic-bezier(0.9, 0, 1, 1);  }
+
+    nav a {
+      display: block;
+      color: #ddd;
+      text-decoration: none;
+      padding: 10px;
+      text-align: right;
+      font-style: italic;  }
+
+    nav a:hover {
+      background: #313640;  }
+
+    aside button {
+      border: none;
+      background: none;
+      position: absolute;
+      right: -50px;
+      top: 7px;
+      font-size: 30px;
+      transform: rotate(90deg);
+      display: inline-block;
+      cursor: pointer;  }
+
+  </style>
+  <script>
+  // ASIDE MENU
+    $(document).ready(function () {
+    $(".toggle").click(function () {
+      $("aside").toggleClass("close");});});
+
+    $(document).mouseup(function (e) {
+      var container2 = $("aside");
+      if (!container2.is(e.target) && container2.has(e.target).length === 0) {
+        $("aside").removeClass("close");}});
+  </script>
+</head>
+
+
+<body>
+  <div>
+    <aside>
+      <button class="toggle">|||</button>
+      <h1>Menu</h1>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="about_us.html">About Us</a>
+        <a href="details.html">Details</a>
+        <a href="rsvp.html">RSVP</a>
+      </nav>
+    </aside>
+  </div>
+  <canvas id=q>
+    <script>
+      const s = window.screen;
+      const w = (q.width = s.width);
+      const h = (q.height = s.height);
+      const ctx = q.getContext("2d");
+      const p = Array(Math.floor(w / 10) + 1).fill(0);
+      const random = (items) => items[Math.floor(Math.random() * items.length)];
+      const hex = "0123456789ABCDEFGHIJ".split("");
+
+      setInterval(() => {
+        ctx.fillStyle = "rgba(0,0,0,.05)";
+        ctx.fillRect(0, 0, w, h);
+        ctx.fillStyle = "#0f0";
+        p.map((v, i) => {
+          ctx.fillText(random(hex), i * 10, v);
+          p[i] = v >= h || v > 50 + 10000 * Math.random() ? 0 : v + 10;
+        });
+      }, 1000 / 30);
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>- ABOUT US</title>
+  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta http-equiv="refresh" content="40; url='DETAILS.html'" />
+  <link rel="stylesheet" href="css/CSSstyles2.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.6/gsap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="js/menu.js" type="text/javascript"></script>
+</head>
+
+<body class="page-background1">
+
+  <div class="page-background2"></div>
+
+  <!-- ASIDE MENU -->
+  <!-- ASIDE MENU -->
+  <div>
+    <aside>
+      <button class="toggle">|||</button>
+      <h1>Menu</h1>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="about_us.html">About Us</a>
+        <a href="details.html">Details</a>
+        <a href="rsvp.html">RSVP</a>
+      </nav>
+    </aside>
+  </div>
+
+  <!-- STORY TEXT -->
+  <!-- STORY TEXT -->
+  <p class="story01">With so many unique people in this world,</p>
+  <p class="story02">it’s sometimes hard for two people to find each other…</p>
+  <p class="story03">So I guess you could say we got lucky?</p>
+  <p class="story04">Cathy and Marcel met by a skating rink in Montreal,</p>
+  <p class="story05">awkwardly sitting near each other at a friend’s birthday party.</p>
+  <p class="story06">Awkwardness continued, as we chatted about pine cones and trees.</p>
+  <p class="story07">We next saw each other at another birthday party, and,</p>
+  <p class="story08">despite Marcel being a bit boozy, still attracted Cathy’s attention.</p>
+  <p class="story09">We started dating soon after.</p>
+  <p class="story10">Marcel knew she was the one not long into the relationship.</p>
+  <p class="story11">It took a little longer before he got the courage to propose,</p>
+  <p class="story12">and found the perfect spot –</p>
+  <p class="story13">a quiet bamboo forest by Inari-Taishi shrine in Kyoto, Japan.</p>
+  <p class="story14">Cathy loves the quiet knocking of bamboo,</p>
+  <p class="story15">and the shrine is one of the most beautiful spots in Japan.</p>
+  <p class="story16">So of course she said yes!</p>
+
+  <!-- CROWD CANVAS -->
+  <!-- CROWD CANVAS -->
+  <canvas id="canvas">
+
+  <script type="text/javascript">
+    console.clear();
+    console.log("lsakdfalskjdflnksd");
+
+    const config = {
+      src: "Images/open-peeps-sheet.png",
+      rows: 15,
+      cols: 7};
+
+  // UTILS
+    const randomRange = (min, max) => min + Math.random() * (max - min);
+    const randomIndex = (array) => randomRange(0, array.length) | 0;
+    const removeFromArray = (array, i) => array.splice(i, 1)[0];
+    const removeItemFromArray = (array, item) => removeFromArray(array, array.indexOf(item));
+    const removeRandomFromArray = (array) => removeFromArray(array, randomIndex(array));
+    const getRandomFromArray = (array) => array[randomIndex(array) | 0];
+
+  // TWEEN FACTORIES
+    const resetPeep = ({ stage, peep }) => {
+    const direction = Math.random() > 0.5 ? 1 : -1;
+    const offsetY = 100 - 250 * gsap.parseEase("power2.in")(Math.random());
+    const startY = stage.height - peep.height + offsetY;
+    let startX;
+    let endX;
+
+    if (direction === 1) {
+      startX = -peep.width;
+      endX = stage.width;
+      peep.scaleX = 1;
+    } else {
+      startX = stage.width + peep.width;
+      endX = 0;
+      peep.scaleX = -1;
+    }
+
+    peep.x = startX;
+    peep.y = startY;
+    peep.anchorY = startY;
+
+    return {
+      startX,
+      startY,
+      endX
+    };};
+
+    const normalWalk = ({ peep, props }) => {
+    const { startX, startY, endX } = props;
+    const xDuration = 10;
+    const yDuration = 0.25;
+    const tl = gsap.timeline();
+
+    tl.timeScale(randomRange(0.5, 1.5));
+    tl.to( peep, {
+        duration: xDuration,
+        x: endX,
+        ease: "none"
+      }, 0);
+    tl.to( peep, {
+        duration: yDuration,
+        repeat: xDuration / yDuration,
+        yoyo: true,
+        y: startY - 10
+      }, 0);
+    return tl; };
+
+    const walks = [normalWalk];
+
+  // CLASSES
+    class Peep {
+      constructor({ image, rect }) {
+        this.image = image;
+        this.setRect(rect);
+        this.x = 0;
+        this.y = 0;
+        this.anchorY = 0;
+        this.scaleX = 1;
+        this.walk = null; }
+
+      setRect(rect) {
+        this.rect = rect;
+        this.width = rect[2];
+        this.height = rect[3];
+        this.drawArgs = [this.image, ...rect, 0, 0, this.width, this.height]; }
+
+      render(ctx) {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.scale(this.scaleX, 1);
+        ctx.drawImage(...this.drawArgs);
+        ctx.restore(); }}
+
+  // MAIN
+    const img = document.createElement("img");
+    img.onload = init;
+    img.src = config.src;
+    const canvas = document.querySelector("#canvas");
+    const ctx = canvas.getContext("2d");
+    const stage = {
+      width: 0,
+      height: 0
+    };
+    const allPeeps = [];
+    const availablePeeps = [];
+    const crowd = [];
+
+    function init() {
+      createPeeps();
+      resize();
+      gsap.ticker.add(render);
+      window.addEventListener("resize", resize); }
+
+    function createPeeps() {
+      const { rows, cols } = config;
+      const { naturalWidth: width, naturalHeight: height } = img;
+      const total = rows * cols;
+      const rectWidth = width / rows;
+      const rectHeight = height / cols;
+
+      for (let i = 0; i < total; i++) {
+        allPeeps.push(new Peep({
+            image: img,
+            rect: [(i % rows) * rectWidth, ((i / rows) | 0) * rectHeight, rectWidth, rectHeight]
+          })
+        );
+      }
+    }
+
+    function resize() {
+      stage.width = canvas.clientWidth;
+      stage.height = canvas.clientHeight;
+      canvas.width = stage.width * devicePixelRatio;
+      canvas.height = stage.height * devicePixelRatio;
+      crowd.forEach((peep) => {
+        peep.walk.kill();
+      });
+      crowd.length = 0;
+      availablePeeps.length = 0;
+      availablePeeps.push(...allPeeps);
+      initCrowd(); }
+
+    function initCrowd() {
+      while (availablePeeps.length) {
+        addPeepToCrowd().walk.progress(Math.random()); }}
+
+    function addPeepToCrowd() {
+      const peep = removeRandomFromArray(availablePeeps);
+      const walk = getRandomFromArray(walks)({
+        peep,
+        props: resetPeep({
+          peep,
+          stage
+        })
+      }).eventCallback("onComplete", () => {
+        removePeepFromCrowd(peep);
+        addPeepToCrowd();
+      });
+      peep.walk = walk;
+      crowd.push(peep);
+      crowd.sort((a, b) => a.anchorY - b.anchorY);
+      return peep; }
+
+    function removePeepFromCrowd(peep) {
+      removeItemFromArray(crowd, peep);
+      availablePeeps.push(peep); }
+
+    function render() {
+      canvas.width = canvas.width;
+      ctx.save();
+      ctx.scale(devicePixelRatio, devicePixelRatio);
+      crowd.forEach((peep) => {
+        peep.render(ctx);
+      });
+      ctx.restore(); }
+</script>
+
+</body>
+</html>

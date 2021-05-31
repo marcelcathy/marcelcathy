@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>- RSVP PAGE</title>
+  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="css/CSSstyles2.css">
+  <link rel="stylesheet" href="css/rsvp.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
+
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script src="js/menu.js"></script>
+  <script type="text/csv" id="unparsed-guests">
+    Catherine,0
+    Marcel,0
+    Luong,1
+    Nhung,1
+    Hau-Nghiep,2
+    Sylvie,2
+    Aivy,2
+    Hau-Quoc,3
+    Hanna,3
+    Harmony,3
+    Ayvi,4
+    Melissa,5
+    Dean,5
+    Sophearoith,6
+    Mikael,6
+    Emilia,6
+    Javier,7
+    Kimberly,8
+    Roma,8
+    Nejteh,9
+    Stephane,10
+    Dorian Boris,11
+    Van Kimsong,12
+    Rui,12
+    Edim,13
+    Sabrina,13
+    Shojib,14
+  </script>
+  <script src="js/search.js"></script>
+</head>
+
+<body class="rsvp-background">
+  <!-- PART 1 - ASIDE MENU -->
+  <div>
+    <aside>
+      <button class="toggle">|||</button>
+      <h1>Menu</h1>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="about_us.html">About Us</a>
+        <a href="details.html">Details</a>
+        <a href="rsvp.html">RSVP</a>
+      </nav>
+    </aside>
+  </div>
+
+  <div class="rsvp-box">
+    <!-- PART 2 - SEARCH NAME -->
+    <div class="search-container">
+      <form id="search-form" action="" method="get" onsubmit="return false">
+        <div class="search-box">
+          <input type="text" autocomplete="off" placeholder="Enter your name..." name="name" id="search-name"/>
+          <div class="result"></div>
+        </div>
+        <button id="search-button" type="submit">That's me!</button>
+      </form>
+    </div>
+    <br/>
+    <br/>
+
+    <!-- PART 3 - SEARCH RESULT / RSVP FORM -->
+    <div class="search-result">
+      <form id="rsvp-form" method="post" action="" onsubmit="return false">
+        <table>
+        <!-- <div class='rsvp-guest'>
+          <input id="name" type="text" name="name" value="" readonly/>
+          <br/>
+
+          <label for="attending">Attending</label>
+          <select id="attending" name="attending">
+            <option value="y">Yes</option>
+            <option value="n">No</option>
+          </select>
+          <br/>
+
+          <label for="meal">Preferred Meal</label>
+          <select id="meal" name="meal">
+            <option value="fish">Fish</option>
+            <option value="chicken">Chicken</option>
+            <option value="vegetarian">Vegetarian</option>
+            <option value="beef">Beef</option>
+            <option value="">No preference</option>
+          </select>
+
+          <label for="restrictions">Dietary Restrictions</label>
+          <input id="restrictions" type="text" name="restrictions"/>
+          <br/>
+        </div>
+        <button id="rsvp-button" type="submit">RSVP</button> -->
+        </table>
+      </form>
+    </div>
+
+    <!-- PART 4 - RSVP SUBMITTED -->
+    <div class="rsvp-submitted" id="rsvp-submitted">
+    </div>
+  </div>
+
+</body>
+</html>
