@@ -78,6 +78,16 @@ function findMatchingGuests(guests, inputVal) {
   return guest;
 }
 
+function findExactMatch(guests, inputVal) {
+  var guest = [];
+  guests.forEach((entry) => {
+    if (entry['name'].toLowerCase() === inputVal.toLowerCase()) {
+      guest.push(entry);
+    }
+  });
+  return guest;
+}
+
 function disableSearch() {
   // $(".seach-container").fadeOut('slow')
   // $(".seach-container").fadeIn('slow')
@@ -89,6 +99,9 @@ function disableSearch() {
 }
 
 function populateGuestsTable(guests, matchingGuest) {
+  disableSearch();
+  $(".search-result").fadeIn('slow');
+
   var family = findFamily(guests, matchingGuest[0]['family_id']);
   // console.log(family);
 
@@ -205,12 +218,12 @@ function sendRsvpData(jsonData) {
   document.getElementById("rsvp-submitted").style.display="block";
   $(".rsvp-submitted").html("Submitting information... Please do not close.");
 
-  $.post("https://script.google.com/macros/s/AKfycbxRywU25AGPHo5biswA-_FNMOV74DxymKsebhuLfjbUJoHJ3mc4Mrv9gvA-76QtAAl-/exec", jsonData)
+  $.post("https://script.google.com/macros/s/AKfycbzvqJK9xlIT_NwizdecKeMMgNBEU6d7XLbxWsgxL46zeYIfjjlY2-CR2FYyt4fO57h-Ow/exec", jsonData)
     .done(function (jsonData) {
       // console.log(jsonData);
       if (jsonData.result === "error") {
         $(".rsvp-submitted").html(jsonData.message);
-        redirectTo("RSVP.html");
+        redirectTo("rsvp.html");
       } else {
         $(".rsvp-submitted").html("Success! Thank you!");
         redirectTo("details.html");
@@ -219,7 +232,7 @@ function sendRsvpData(jsonData) {
     .fail(function (jsonData) {
       // console.log(data);
       $(".rsvp-submitted").html("There was an issue with the server.");
-      redirectTo("RSVP.html");
+      redirectTo("rsvp.html");
     });
 }
 
@@ -243,10 +256,9 @@ $(document).ready(function(){
     if (matchingGuest === null || matchingGuest.length <= 0) {
       console.log("No result found.")
     } else if (matchingGuest.length > 1) {
-      console.log("There is more than one matching result. Please be more specific.")
+      matchingGuest = findExactMatch(matchingGuest, inputName);
+      populateGuestsTable(guests, matchingGuest);
     } else {
-      disableSearch();
-      $(".search-result").fadeIn('slow');
       populateGuestsTable(guests, matchingGuest);
     }
   });
