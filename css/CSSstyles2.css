@@ -364,4 +364,8 @@ p {
 
 .story03, .story06, .story09, .story12, .story15 {
   left: 19%;  }
+
+  #canvas {
+    margin-top: 20%;  }
+}
 }
