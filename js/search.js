@@ -218,7 +218,7 @@ function sendRsvpData(jsonData) {
   document.getElementById("rsvp-submitted").style.display="block";
   $(".rsvp-submitted").html("Submitting information... Please do not close.");
 
-  $.post("https://script.google.com/macros/s/AKfycbzvqJK9xlIT_NwizdecKeMMgNBEU6d7XLbxWsgxL46zeYIfjjlY2-CR2FYyt4fO57h-Ow/exec", jsonData)
+  $.post("https://script.google.com/macros/s/AKfycbz6UAyZIVNni0guz46oMLzfaE2aSAlwoh6WzmnDXYW3AbtFHxCfT6sUayeJXNwIFgCgAg/exec", jsonData)
     .done(function (jsonData) {
       // console.log(jsonData);
       if (jsonData.result === "error") {
