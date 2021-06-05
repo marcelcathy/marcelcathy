@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>- DETAILS</title>
+  <title>Details</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.6/gsap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -18,15 +18,34 @@
     position: absolute;
     z-index: 80;
     width: 100%;
-    margin: -12px;
+    margin-top: -12px;
   }
 
-  p {
+  .eml-text-bar p {
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     text-align: center;
-    color: black;
+    color: #000;
     font-size: 12px;
-    font-style: bold;
-    text-decoration: underline black 2px;
+    font-weight: bold;
+  }
+
+  .eml-text-bar a:link {
+    color: #000;
+  }
+
+  .eml-text-bar a:visited {
+    color: #585858;
+  }
+
+  .eml-text-bar a:hover {
+    color: #585858;
+  }
+
+  .eml-text-bar a:active {
+    color: #585858;
   }
 
   .page-background {
@@ -507,7 +526,7 @@
       <div class="petal"></div>
       <div class="petal"></div>
 
-  <div class="eml-text-bar"><p href="mailto:snuffles.home@gmail.com">Email us at snuffles.home@gmail.com</p></div>
+  <div class="eml-text-bar"><p>Email us at <a href="mailto:snuffles.home@gmail.com">snuffles.home@gmail.com</a></p></div>
   <div class="page-background"></div>
 
   <div id="gallery" class="container-fluid">

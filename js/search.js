@@ -1,29 +1,6 @@
-/**
-// For use with PHP & MySQL
-$(document).ready(function(){
-  $('.search-box input[type="text"]').on("keyup input", function() {
-    var inputVal = $(this).val();
-    var resultDropdown = $(this).siblings(".result");
-
-    if (inputVal.length > 2) {
-      $.get("backend-autofill", {term: inputVal}).done(function(data) {
-        resultDropdown.html(data);
-      });
-    } else {
-      resultDropdown.empty();
-    }
-  });
-
-  $(document).on("click", ".result p", function() {
-    $(this).parents(".search-box").find('input[type="text"]').val($(this).text());
-    $(this).parent(".result").empty();
-  });
-});
-**/
-
 // Read from CSV file
 function processData(allText) {
-  var record_num = 2; // or however many elements there are in each row
+  var record_num = 2;
   var allTextLines = allText.match(/[^\r\n]+/g);
   var guests = [];
   var headings = {};
@@ -89,8 +66,6 @@ function findExactMatch(guests, inputVal) {
 }
 
 function disableSearch() {
-  // $(".seach-container").fadeOut('slow')
-  // $(".seach-container").fadeIn('slow')
   var button = document.getElementById("search-button");
   button.setAttribute("disabled", "disabled");
   button.style.cursor = "not-allowed";
@@ -103,9 +78,7 @@ function populateGuestsTable(guests, matchingGuest) {
   $(".search-result").fadeIn('slow');
 
   var family = findFamily(guests, matchingGuest[0]['family_id']);
-  // console.log(family);
 
-  // var form = document.getElementById("rsvp-form");
   $parentForm = $("#rsvp-form");
   family.forEach((member) => {
     var memberId = member.toLowerCase().replace(/[\W]+/g,'');
@@ -119,7 +92,6 @@ function populateGuestsTable(guests, matchingGuest) {
     avatar.append("<img src='"+randomPic+"'/>")
     avatar.append("<br/>");
 
-    // var attending = $("<label for='attending' class='attending'>").appendTo("#"+rsvpGuestId);
     var attending = $("<label for='attending' class='attending'>").appendTo("#"+avatarId);
     attending.append("<input id='name' type='text' name='name' value='" + member + "' readonly/>");
     attending.append("<input type='checkbox' id='attending-"+memberId+"' name='attending' onClick='isAttending(this)'>").appendTo("#"+rsvpGuestId);
@@ -170,7 +142,6 @@ function findFamily(guests, familyId) {
 
 function isAttending(checkbox) {
   var suffixId = checkbox.id.replace("attending", "");
-  // console.log(suffixId);
 
   if (checkbox.checked) {
     document.getElementById("meal"+suffixId).disabled = false;
@@ -205,13 +176,6 @@ function hideRsvpTable() {
   buttonElement.remove();
   $(".search-result").hide();
   $(".search-container").hide();
-
-  // var button = document.getElementById("search-button");
-  // button.removeAttribute("disabled");
-  // button.style.cursor = "pointer";
-  // var searchText = document.getElementById("search-name");
-  // searchText.removeAttribute("disabled");
-  // searchText.value = "";
 }
 
 function sendRsvpData(jsonData) {
@@ -220,7 +184,6 @@ function sendRsvpData(jsonData) {
 
   $.post("https://script.google.com/macros/s/AKfycbz6UAyZIVNni0guz46oMLzfaE2aSAlwoh6WzmnDXYW3AbtFHxCfT6sUayeJXNwIFgCgAg/exec", jsonData)
     .done(function (jsonData) {
-      // console.log(jsonData);
       if (jsonData.result === "error") {
         $(".rsvp-submitted").html(jsonData.message);
         redirectTo("rsvp.html");
@@ -230,7 +193,6 @@ function sendRsvpData(jsonData) {
       }
     })
     .fail(function (jsonData) {
-      // console.log(data);
       $(".rsvp-submitted").html("There was an issue with the server.");
       redirectTo("rsvp.html");
     });
@@ -266,9 +228,7 @@ $(document).ready(function(){
   $("#rsvp-form").on("submit", function(e) {
     e.preventDefault();
     var formData = $(this).serialize();
-    // console.log(formData);
     var jsonData = convertFormDataToJson(formData);
-    // console.log(jsonData);
 
     hideRsvpTable();
     sendRsvpData(jsonData);
