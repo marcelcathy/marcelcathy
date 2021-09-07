@@ -105,10 +105,10 @@
     <div class="search-container">
       <form id="search-form" action="" method="get" onsubmit="return false">
         <div class="search-box">
-          <input type="text" autocomplete="off" placeholder="Enter your name..." name="name" id="search-name"/>
+          <input type="text" autocomplete="off" placeholder="Enter your name..." name="name" id="search-name" disabled/>
           <div class="result"></div>
         </div>
-        <button id="search-button" type="submit">That's me!</button>
+        <button id="search-button" type="submit" disabled>That's me!</button>
       </form>
     </div>
     <br/>
@@ -117,13 +117,18 @@
     <!-- PART 3 - SEARCH RESULT / RSVP FORM -->
     <div class="search-result">
       <form id="rsvp-form" method="post" action="" onsubmit="return false">
-        <table>
-        </table>
       </form>
     </div>
 
     <!-- PART 4 - RSVP SUBMITTED -->
     <div class="rsvp-submitted" id="rsvp-submitted">
+    </div>
+
+    <!-- PART 5 - RSVP CLOSED -->
+    <div class="rsvp-goodbye">
+      RSVP is now closed.
+      <br/>
+      Please contact us directly if there are any changes at <a href="mailto:snuffles.home@gmail.com">snuffles.home@gmail.com</a>.
     </div>
   </div>
 
